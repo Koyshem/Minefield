@@ -4,7 +4,7 @@
 #include <chrono>
 #include <thread>
 
-const int COMPLEXITY = 200;
+const int COMPLEXITY = 280;
 int WINDOW_WIDTH = COMPLEXITY;
 int WINDOW_HEIGHT = COMPLEXITY;
 const int CELL_SIZE = 40;
@@ -96,16 +96,16 @@ int main() {
         // Menu
         sf::Text startText;
         startText.setFont(font);
-        startText.setCharacterSize(24);
-        startText.setString("Start");
+        startText.setCharacterSize(COMPLEXITY / 40 * 2);
+        startText.setString("START");
         startText.setFillColor(sf::Color::White);
         startText.setPosition(WINDOW_WIDTH / 2 - startText.getLocalBounds().width / 2,
                               WINDOW_HEIGHT / 2 - startText.getLocalBounds().height);
 
         sf::Text restartText;
         restartText.setFont(font);
-        restartText.setCharacterSize(24);
-        restartText.setString("Restart");
+        restartText.setCharacterSize(COMPLEXITY / 40 * 2);
+        restartText.setString("RESTART");
         restartText.setFillColor(sf::Color::White);
         restartText.setPosition(WINDOW_WIDTH / 2 - restartText.getLocalBounds().width / 2,
                                 WINDOW_HEIGHT / 2 + restartText.getLocalBounds().height);
