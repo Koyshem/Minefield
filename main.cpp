@@ -4,7 +4,7 @@
 #include <chrono>
 #include <thread>
 
-const int COMPLEXITY = 200;
+const int COMPLEXITY = 160;
 int WINDOW_WIDTH = COMPLEXITY;
 int WINDOW_HEIGHT = COMPLEXITY;
 const int CELL_SIZE = 40;
@@ -44,9 +44,16 @@ int main() {
         return 1;
     }
 
+    sf::Texture explodedMineTexture;
+    if (!explodedMineTexture.loadFromFile("exploded_mine.png")) {
+        std::cout << "Error exploded_mine.png" << std::endl;
+        return 1;
+    }
+
     sf::Sprite hiddenSprite(hiddenTexture);
     sf::Sprite revealedSprite(revealedTexture);
     sf::Sprite mineSprite(mineTexture);
+    sf::Sprite explodedMineSprite(explodedMineTexture);
 
     std::vector<std::vector<Cell>> field(FIELD_WIDTH, std::vector<Cell>(FIELD_HEIGHT));
 
@@ -127,25 +134,25 @@ int main() {
                                 }
                             }
                         }
+                    }
 
-                        // Проверка на победу
-                        bool allNonMinesRevealed = true;
-                        for (int x = 0; x < FIELD_WIDTH; x++) {
-                            for (int y = 0; y < FIELD_HEIGHT; y++) {
-                                if (!field[x][y].hasMine && field[x][y].state != CellState::Revealed) {
-                                    allNonMinesRevealed = false;
-                                    break;
-                                }
-                            }
-                            if (!allNonMinesRevealed) {
+                    // Проверка на победу
+                    bool allNonMinesRevealed = true;
+                    for (int x = 0; x < FIELD_WIDTH; x++) {
+                        for (int y = 0; y < FIELD_HEIGHT; y++) {
+                            if (!field[x][y].hasMine && field[x][y].state != CellState::Revealed) {
+                                allNonMinesRevealed = false;
                                 break;
                             }
                         }
-
-                        if (allNonMinesRevealed) {
-                            win = true;
-                            std::cout << "You win!" << std::endl;
+                        if (!allNonMinesRevealed) {
+                            break;
                         }
+                    }
+
+                    if (allNonMinesRevealed) {
+                        win = true;
+                        std::cout << "You win!" << std::endl;
                     }
                 }
             }
@@ -167,30 +174,64 @@ int main() {
                 } else if (field[x][y].state == CellState::Mine) {
                     mineSprite.setPosition(posX, posY);
                     window.draw(mineSprite);
+
                 }
             }
         }
-
-        if (gameOver || win) {
+        if (gameOver) {
             sf::RectangleShape overlay(sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT));
             overlay.setFillColor(sf::Color(0, 0, 0, 128));
             window.draw(overlay);
+            for (int x = 0; x < FIELD_WIDTH; x++) {
+                for (int y = 0; y < FIELD_HEIGHT; y++) {
+                    int posX = x * CELL_SIZE;
+                    int posY = y * CELL_SIZE;
+                    if (field[x][y].hasMine) {
+                        explodedMineSprite.setPosition(posX, posY);
+                        window.draw(explodedMineSprite);
 
+                    }
+                }
+            }
             sf::Text message;
             sf::Font font;
-            if (!font.loadFromFile("arial.ttf")) {
+            if (!font.loadFromFile("Pixeled.ttf")) {
                 std::cout << "Error arial.ttf" << std::endl;
                 return 1;
             }
             message.setFont(font);
-            message.setCharacterSize(30);
+            message.setCharacterSize(COMPLEXITY/40*3);
             message.setFillColor(sf::Color::White);
-            if (gameOver) {
-                message.setString("You lost!");
-            } else if (win) {
-                message.setString("You win!");
+            message.setString("YOU LOST!");
+            message.setPosition((COMPLEXITY/2)-(COMPLEXITY/40*12), COMPLEXITY/2-30);
+            window.draw(message);
+        }
+        if (win) {
+            sf::RectangleShape overlay(sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT));
+            overlay.setFillColor(sf::Color(0, 0, 0, 128));
+            window.draw(overlay);
+            for (int x = 0; x < FIELD_WIDTH; x++) {
+                for (int y = 0; y < FIELD_HEIGHT; y++) {
+                    int posX = x * CELL_SIZE;
+                    int posY = y * CELL_SIZE;
+                    if (field[x][y].hasMine) {
+                        mineSprite.setPosition(posX, posY);
+                        window.draw(mineSprite);
+
+                    }
+                }
             }
-            message.setPosition(20, 20);
+            sf::Text message;
+            sf::Font font;
+            if (!font.loadFromFile("Pixeled.ttf")) {
+                std::cout << "Error arial.ttf" << std::endl;
+                return 1;
+            }
+            message.setFont(font);
+            message.setCharacterSize(COMPLEXITY/40*3);
+            message.setFillColor(sf::Color::White);
+            message.setString("YOU WIN!");
+            message.setPosition((COMPLEXITY/2)-(COMPLEXITY/40*10), COMPLEXITY/2-30);
             window.draw(message);
         }
 
