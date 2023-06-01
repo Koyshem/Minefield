@@ -16,4 +16,4 @@ Implemented:
 
 -Changing the number of cells and mines when editing the "COMPLEXITY" parameter (Sorry, but I did not display this as buttons inside the game)
 
-https://github.com/Koyshem/Minefield/assets/99501085/f77ac328-238d-42ae-acc2-f0283a203551
+https://github.com/Koyshem/Minefield/assets/99501085/4e9d4dc0-91e8-44cc-8d8c-a372624c52a4
