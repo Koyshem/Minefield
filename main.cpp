@@ -4,7 +4,7 @@
 #include <chrono>
 #include <thread>
 
-const int COMPLEXITY = 280;
+const int COMPLEXITY = 240;
 int WINDOW_WIDTH = COMPLEXITY;
 int WINDOW_HEIGHT = COMPLEXITY;
 const int CELL_SIZE = 40;
@@ -299,6 +299,6 @@ int main() {
                 }
             }
         }
+        return 0;
     }
-    return 0;
 }
