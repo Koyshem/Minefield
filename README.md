@@ -18,4 +18,4 @@ Implemented:
 
 https://github.com/Koyshem/Minefield/assets/99501085/4e9d4dc0-91e8-44cc-8d8c-a372624c52a4
 
-![image](https://github.com/Koyshem/Minefield/assets/99501085/aac5caf6-f1c7-4841-91c8-2d8129001e31)
+![image](https://github.com/Koyshem/Minefield/assets/99501085/10e8f997-1568-44ac-af76-1fd555805bf5)
